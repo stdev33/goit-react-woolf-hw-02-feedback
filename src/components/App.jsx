@@ -15,12 +15,23 @@ class App extends Component {
     }));
   };
 
+  countTotalFeedback = () => {
+    return this.state.good + this.state.neutral + this.state.bad;
+  };
+
+  countPositiveFeedbackPercentage = () => {
+    const total = this.countTotalFeedback();
+    return total ? Math.round((this.state.good / total) * 100) : 0;
+  };
+
   render() {
     return (
       <div className="App">
         <FeedbackWidget
           onFeedback={this.handleFeedback}
           statistics={this.state}
+          total={this.countTotalFeedback()}
+          positivePercentage={this.countPositiveFeedbackPercentage()}
         />
       </div>
     );
