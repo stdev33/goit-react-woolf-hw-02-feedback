@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import FeedbackWidget from './FeedbackWidget/FeedbackWidget';
+import FeedbackOptions from './FeedbackOptions/FeedbackOptions';
+import Section from './Section/Section';
+import Statistics from './Statistics/Statistics';
 
 class App extends Component {
   state = {
@@ -25,14 +27,27 @@ class App extends Component {
   };
 
   render() {
+    const { good, neutral, bad } = this.state;
+    const total = this.countTotalFeedback();
+    const positivePercentage = this.countPositiveFeedbackPercentage();
+
     return (
-      <div className="App">
-        <FeedbackWidget
-          onFeedback={this.handleFeedback}
-          statistics={this.state}
-          total={this.countTotalFeedback()}
-          positivePercentage={this.countPositiveFeedbackPercentage()}
-        />
+      <div>
+        <Section title="Please leave feedback">
+          <FeedbackOptions
+            options={['good', 'neutral', 'bad']}
+            onLeaveFeedback={this.handleFeedback}
+          />
+        </Section>
+        <Section title="Statistics">
+          <Statistics
+            good={good}
+            neutral={neutral}
+            bad={bad}
+            total={total}
+            positivePercentage={positivePercentage}
+          />
+        </Section>
       </div>
     );
   }
